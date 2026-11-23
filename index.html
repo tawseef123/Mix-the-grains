@@ -19,8 +19,8 @@
 (()=>{'use strict';
 const $=id=>document.getElementById(id), SAVE_KEY='dalChal_v1_save';
 const levelNames=['First handful','A little more','Steady hands','Keep sorting','Good rhythm','Bigger batch','Stay focused','Quick fingers','Sharp eyes','Halfway there','Mixed handfuls','More to sort','Find your flow','Careful sorting','Fast and steady','Deep mix','No distractions','Quick decisions','Sharp sorting','Almost expert','Dense mixture','Keep the streak','Precision test','Speed sorter','Big batch','Expert hands','Rapid sorting','Final stretch','Master sorter','Grand challenge'];
-const levels=Array.from({length:30},(_,i)=>{const dal=10+i*10;const rice=10+i*10;const total=dal+rice;const time=60+Math.max(0,i-1)*10;return {n:i+1,name:levelNames[i],dal,rice,total,time}});
-let save=loadSave(),level=1,grains=[],selected=null,score=0,combo=0,bestCombo=0,timeLeft=60,timerId=null,startedAt=0,finished=false,dragId=null,audioCtx=null;
+const levels=Array.from({length:30},(_,i)=>{const dal=10+i*5;const rice=10+i*5;const total=dal+rice;const time=i===0?40:60+(i-1)*20;return {n:i+1,name:levelNames[i],dal,rice,total,time}});
+let save=loadSave(),level=1,grains=[],selected=null,score=0,combo=0,bestCombo=0,timeLeft=40,timerId=null,startedAt=0,finished=false,dragId=null,audioCtx=null;
 function loadSave(){try{const s=JSON.parse(localStorage.getItem(SAVE_KEY)||'{}');return{unlocked:Math.max(1,Math.min(30,s.unlocked||1)),stars:s.stars||{},best:s.best||{},settings:{sound:s.settings?.sound!==false,vibe:s.settings?.vibe!==false}}}catch{return{unlocked:1,stars:{},best:{},settings:{sound:true,vibe:true}}}}
 function persist(){try{localStorage.setItem(SAVE_KEY,JSON.stringify(save))}catch{toast('Could not save progress on this device.')}}
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
